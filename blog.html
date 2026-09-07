@@ -17,6 +17,27 @@
           },
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            marquee: 'marquee 40s linear infinite',
+            pulseAmbient: 'pulseAmbient 6s ease-in-out infinite alternate',
+            plasma1: 'plasmaRotate 15s linear infinite',
+            plasma2: 'plasmaRotate 20s linear infinite reverse',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            pulseAmbient: {
+              '0%': { opacity: 0.6, transform: 'scale(0.95) translateX(-50%)' },
+              '100%': { opacity: 1, transform: 'scale(1.05) translateX(-50%)' },
+            },
+            plasmaRotate: {
+              '0%': { transform: 'rotate(0deg) scale(1)' },
+              '50%': { transform: 'rotate(180deg) scale(1.2)' },
+              '100%': { transform: 'rotate(360deg) scale(1)' },
+            }
           }
         }
       }
@@ -26,18 +47,81 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
   <style>
-    html, body { font-family: 'Inter', sans-serif; background-color: #000; color: #fff; overflow-x: hidden; }
+    html, body {
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Fixed Background Wrapper */
+    .glowing-horizon-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      perspective: 1000px;
+    }
+    
+    .glowing-horizon {
+      position: absolute;
+      width: 200vw;
+      height: 100vh;
+      left: 50%;
+      transform-origin: top center;
+      top: 75vh;
+      border-radius: 100%;
+      background: #000000;
+      border-top: 2px solid rgba(255, 255, 255, 0.9);
+      animation: live-3d-breathe 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes live-3d-breathe {
+      0% {
+        transform: translateX(-50%) rotateX(0deg) scale(1);
+        box-shadow: 
+          0 -20px 80px rgba(168, 85, 247, 0.8),
+          0 -60px 150px rgba(139, 92, 246, 0.5),
+          0 -120px 300px rgba(109, 40, 217, 0.3),
+          0 0 20px rgba(255, 255, 255, 0.3) inset;
+      }
+      100% {
+        transform: translateX(-50%) rotateX(8deg) translateY(-15px) scale(1.05);
+        box-shadow: 
+          0 -40px 120px rgba(217, 70, 239, 1),
+          0 -100px 300px rgba(168, 85, 247, 0.8),
+          0 -150px 400px rgba(139, 92, 246, 0.5),
+          0 5px 30px rgba(255, 255, 255, 0.8) inset;
+      }
+    }
     
     .deep-purple-glow {
       position: absolute;
       width: 150vw;
-      height: 70vh;
+      height: 60vh;
+      left: 50%;
+      transform-origin: center;
+      top: 30vh;
+      background: radial-gradient(ellipse at bottom, rgba(168, 85, 247, 0.6) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .plasma-core {
+      position: absolute;
+      top: 60vh;
       left: 50%;
       transform: translateX(-50%);
-      top: -20vh;
-      background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15) 0%, rgba(0,0,0,0) 70%);
+      width: 80vw;
+      height: 40vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
+      filter: blur(80px);
+      mix-blend-mode: screen;
+      opacity: 0.8;
     }
     
     .glass-card { 
@@ -60,10 +144,18 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col relative selection:bg-purple-500/30">
 
-  <div class="deep-purple-glow"></div>
+  <!-- Background 3D Live Layer (Fixed) -->
+  <div class="glowing-horizon-wrapper">
+    <div class="deep-purple-glow animate-pulseAmbient"></div>
+    <div class="plasma-core">
+      <div class="absolute inset-0 bg-fuchsia-500/40 rounded-full animate-plasma1 origin-[45%_55%]"></div>
+      <div class="absolute inset-0 bg-violet-600/40 rounded-full animate-plasma2 origin-[55%_45%]"></div>
+    </div>
+    <div class="glowing-horizon"></div>
+  </div>
 
   <!-- Navbar -->
-  <nav class="fixed top-0 w-full z-50 pt-6">
+  <nav class="fixed top-0 w-full z-50 py-4 bg-black/80 backdrop-blur-xl border-b border-white/10 transition-all duration-300">
     <div class="container mx-auto px-6 h-14 flex items-center justify-between">
       
       <!-- Brand & Badges -->
@@ -140,12 +232,7 @@
 
   <!-- Hero Section -->
   <main class="pt-48 pb-32 relative z-10 overflow-hidden flex items-center min-h-[90vh]">
-    <!-- Hero Background Image -->
-    <div class="absolute inset-0 z-0 overflow-hidden">
-      <img src="images/img_3.webp" class="w-full h-full object-cover opacity-30 mix-blend-luminosity scale-105" alt="Blog Hero Background">
-      <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black"></div>
-      <div class="absolute inset-0 bg-purple-900/20 mix-blend-overlay"></div>
-    </div>
+
     
     <div class="absolute top-0 right-1/4 w-64 h-64 bg-purple-500/20 blur-[100px] rounded-full pointer-events-none z-0"></div>
     <div class="container mx-auto px-6 max-w-7xl relative z-10">
@@ -418,7 +505,7 @@
         <ul class="space-y-4">
           <li><a href="404.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Terms of Service</a></li>
           <li><a href="404.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Privacy Policy</a></li>
-          <li><a href="login.html" class="text-sm text-purple-400 font-bold hover:text-purple-300 hover:pl-2 transition-all flex items-center">Portal <span class="text-[9px] font-black uppercase ml-2 bg-purple-500/20 py-0.5 px-2 rounded-full text-purple-300 border border-purple-500/30">Client</span></a></li>
+
         </ul>
       </div>
       
