@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - Stackly Marketing Agency</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#000000',
+            foreground: '#ffffff',
+            primary: '#a855f7',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .deep-purple-glow {
+      position: absolute;
+      width: 150vw;
+      height: 70vh;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -20vh;
+      background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(168, 85, 247, 0.3);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col relative selection:bg-purple-500/30">
+
+  <div class="deep-purple-glow"></div>
+
+  <!-- Navbar -->
+  <nav class="absolute top-0 w-full z-50 pt-6">
+    <div class="container mx-auto px-6 h-14 flex items-center justify-between">
+
+      <!-- Brand & Badges -->
+      <div class="flex items-center gap-4 relative z-[60]">
+        <a href="index.html" class="flex items-center gap-2 group relative z-10 hover:opacity-80 transition-opacity">
+          <img src="logo_0198.webp" alt="Stackly Brand Logo" class="h-8 md:h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+        </a>
+        <div
+          class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-purple-400 backdrop-blur-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"
+            stroke="none">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+            </polygon>
+          </svg>
+          <span class="text-white/80">Top Rated Agency</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div
+        class="hidden lg:flex gap-8 items-center bg-black/40 px-8 py-2.5 rounded-full border border-white/10 backdrop-blur-xl shadow-lg shadow-black/50">
+        <a href="index.html"
+          class="text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-400 hover:text-white transition-colors">Home</a>
+        <a href="about.html"
+          class="text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-400 hover:text-white transition-colors">About</a>
+        <a href="service.html"
+          class="text-[11px] uppercase tracking-[0.2em] font-bold text-white transition-colors hover:text-white">Services</a>
+        <a href="blog.html"
+          class="text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-400 hover:text-white transition-colors">Blog</a>
+        <a href="contact.html"
+          class="text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-400 hover:text-white transition-colors">Contact</a>
+      </div>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-3 relative z-[60]">
+        <a href="login.html" class="hidden lg:flex px-5 py-2 text-sm font-medium bg-white text-black hover:bg-gray-200 rounded-lg transition-colors shadow-[0_0_15px_rgba(255,255,255,0.2)]">Login</a>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-300 hover:text-white focus:outline-none bg-white/5 border border-white/10 rounded-lg backdrop-blur-md">
+          <i data-feather="menu" class="w-5 h-5" id="menu-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Full-Screen Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[55] flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500">
+      <div class="flex flex-col items-center gap-7 w-full px-6">
+        <a href="index.html" class="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-white hover:text-purple-400 transition-colors">Home</a>
+        <a href="about.html" class="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-white hover:text-purple-400 transition-colors">About</a>
+        <a href="service.html" class="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-white hover:text-purple-400 transition-colors">Services</a>
+        <a href="blog.html" class="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-white hover:text-purple-400 transition-colors">Blog</a>
+        <a href="contact.html" class="text-xl md:text-2xl font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-white hover:text-purple-400 transition-colors">Contact</a>
+        <div class="h-px w-24 bg-white/10 my-3"></div>
+        <a href="login.html" class="w-full max-w-[280px] md:max-w-xs py-4 text-center text-sm font-bold uppercase tracking-widest bg-purple-500 text-white rounded-xl shadow-[0_0_30px_rgba(168,85,247,0.4)]">Client Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      let isMenuOpen = false;
+
+      if(menuBtn) {
+        menuBtn.addEventListener('click', () => {
+          isMenuOpen = !isMenuOpen;
+          if (isMenuOpen) {
+            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+            document.body.classList.add('overflow-hidden');
+            menuIcon.setAttribute('data-feather', 'x');
+            document.body.style.overflow = 'hidden';
+          } else {
+            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+            document.body.classList.remove('overflow-hidden');
+            menuIcon.setAttribute('data-feather', 'menu');
+            document.body.style.overflow = '';
+          }
+          if(window.feather) feather.replace();
+        });
+      }
+    });
+  </script>
+
+  <main class="pt-48 pb-32 relative z-10 overflow-hidden flex items-center min-h-[90vh]">
+    <!-- Hero Background Image -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img src="images/img_7.webp"
+        class="w-full h-full object-cover opacity-30 mix-blend-luminosity scale-105"
+        alt="Marketing Services Background">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-black"></div>
+      <div class="absolute inset-0 bg-purple-900/20 mix-blend-overlay"></div>
+    </div>
+
+    <!-- Ambient background element -->
+    <div
+      class="absolute top-0 right-1/2 translate-x-1/2 w-[800px] h-[800px] bg-purple-900/30 rounded-full blur-[120px] mix-blend-screen pointer-events-none z-0">
+    </div>
+
+    <div class="container mx-auto px-6 max-w-7xl relative z-10">
+      <div class="text-center max-w-4xl mx-auto space-y-8" data-aos="fade-up">
+        <h1 class="text-6xl md:text-8xl font-medium tracking-tight text-white leading-none">
+          Marketing Services<br><span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500">That
+            Drive Growth.</span>
+        </h1>
+        <p class="text-xl text-gray-300 font-light mt-6 max-w-3xl mx-auto leading-relaxed">
+          Strategic, creative, and performance-focused marketing solutions designed to help your brand attract, engage,
+          and convert the right audience.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <section class="relative z-10 py-20 px-6">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center mb-20" data-aos="fade-up">
+        <h3 class="text-xs uppercase tracking-widest text-fuchsia-500 font-bold mb-3">Services Introduction</h3>
+        <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight">Everything You Need to Grow Your Brand.
+        </h2>
+        <p class="text-lg text-gray-400 font-light mt-6 max-w-2xl mx-auto">From building your brand identity to
+          generating leads and increasing online visibility, our services are designed around your business goals.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 1 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-purple-500/50"
+          data-aos="fade-up" data-aos-delay="100">
+          <i data-feather="bar-chart-2"
+            class="w-8 h-8 text-purple-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Digital Marketing</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Reach the right audience with data-driven digital
+            strategies.</p>
+        </div>
+        <!-- 2 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-indigo-500/50"
+          data-aos="fade-up" data-aos-delay="200">
+          <i data-feather="instagram"
+            class="w-8 h-8 text-indigo-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Social Media Marketing</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Build a strong social presence and turn followers
+            into loyal customers.</p>
+        </div>
+        <!-- 3 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-emerald-500/50"
+          data-aos="fade-up" data-aos-delay="300">
+          <i data-feather="search" class="w-8 h-8 text-emerald-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">SEO Services</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Improve your search visibility and attract
+            high-intent organic traffic.</p>
+        </div>
+        <!-- 4 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-rose-500/50"
+          data-aos="fade-up" data-aos-delay="400">
+          <i data-feather="target" class="w-8 h-8 text-rose-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Google & Meta Ads</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Reach potential customers with targeted,
+            conversion-focused campaigns.</p>
+        </div>
+        <!-- 5 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-cyan-500/50"
+          data-aos="fade-up" data-aos-delay="500">
+          <i data-feather="edit-3" class="w-8 h-8 text-cyan-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Content Marketing</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Create valuable content that builds trust,
+            authority, and engagement.</p>
+        </div>
+        <!-- 6 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-fuchsia-500/50"
+          data-aos="fade-up" data-aos-delay="600">
+          <i data-feather="pen-tool"
+            class="w-8 h-8 text-fuchsia-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Branding & Design</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Create a memorable brand identity that stands out
+            from the competition.</p>
+        </div>
+        <!-- 7 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-blue-500/50"
+          data-aos="fade-up" data-aos-delay="700">
+          <i data-feather="monitor" class="w-8 h-8 text-blue-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Turn visitors into customers with high-performing,
+            user-friendly websites.</p>
+        </div>
+        <!-- 8 -->
+        <div
+          class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-transform duration-300 hover:border-orange-500/50"
+          data-aos="fade-up" data-aos-delay="800">
+          <i data-feather="users" class="w-8 h-8 text-orange-400 mb-6 group-hover:scale-110 transition-transform"></i>
+          <h3 class="text-xl font-bold text-white mb-3">Lead Generation</h3>
+          <p class="text-gray-400 font-light text-sm leading-relaxed">Generate qualified leads and create a consistent
+            pipeline for your business.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative z-10 py-32 px-6 border-t border-white/5 bg-black/40 backdrop-blur-xl">
+    <div class="container mx-auto max-w-7xl">
+      <div class="flex flex-col lg:flex-row gap-16 items-center">
+        <!-- Why Choose Us -->
+        <div class="w-full lg:w-1/2 space-y-8" data-aos="fade-right">
+          <h3 class="text-xs uppercase tracking-widest text-indigo-500 font-bold mb-3">Why Choose Us</h3>
+          <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight">Marketing With Purpose.<br>Results
+            With Impact.</h2>
+          <p class="text-xl text-gray-400 font-light leading-relaxed">
+            We combine creative thinking, smart strategy, and measurable data to deliver marketing campaigns that
+            support real business growth.
+          </p>
+        </div>
+        <!-- Results Section -->
+        <div class="w-full lg:w-1/2 space-y-8 glass-card p-12 rounded-3xl" data-aos="fade-left">
+          <h3 class="text-xs uppercase tracking-widest text-emerald-500 font-bold mb-3">Results Section</h3>
+          <h2 class="text-3xl font-semibold text-white tracking-tight">Strategies Built Around Your Goals.</h2>
+          <p class="text-lg text-gray-300 font-light leading-relaxed">
+            Whether you want more visibility, leads, sales, or stronger brand recognition, we create marketing solutions
+            focused on measurable outcomes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative z-10 py-32 px-6 border-t border-white/5 bg-black">
+    <div class="container mx-auto max-w-6xl">
+      <div class="text-center mb-20" data-aos="fade-up">
+        <h3 class="text-xs uppercase tracking-widest text-purple-500 font-bold mb-3">Our Process</h3>
+        <h2 class="text-5xl font-semibold text-white tracking-tight">How We Turn Strategy Into Results.</h2>
+      </div>
+
+      <div class="relative pl-8 md:pl-0">
+        <!-- Vertical Line -->
+        <div
+          class="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-purple-500/50 via-fuchsia-500/20 to-transparent -translate-x-1/2">
+        </div>
+
+        <div class="space-y-16">
+          <!-- Step 1 -->
+          <div class="flex flex-col md:flex-row items-center justify-between w-full" data-aos="fade-up">
+            <div class="md:w-5/12 text-left md:text-right pr-0 md:pr-10 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-white mb-2">Discover</h3>
+              <p class="text-gray-400 font-light">Understand your business, audience, and goals.</p>
+            </div>
+            <div
+              class="absolute left-0 md:left-1/2 flex items-center justify-center w-12 h-12 rounded-full border border-purple-500 bg-black -translate-x-1/2 shadow-lg shadow-purple-500/20 z-10">
+              <span class="text-white font-bold">1</span>
+            </div>
+            <div class="md:w-5/12 pl-0 md:pl-10"></div>
+          </div>
+          <!-- Step 2 -->
+          <div class="flex flex-col md:flex-row-reverse items-center justify-between w-full" data-aos="fade-up">
+            <div class="md:w-5/12 text-left pl-0 md:pl-10 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-white mb-2">Strategize</h3>
+              <p class="text-gray-400 font-light">Build a customized marketing strategy.</p>
+            </div>
+            <div
+              class="absolute left-0 md:left-1/2 flex items-center justify-center w-12 h-12 rounded-full border border-purple-500 bg-black -translate-x-1/2 shadow-lg shadow-purple-500/20 z-10">
+              <span class="text-white font-bold">2</span>
+            </div>
+            <div class="md:w-5/12 pr-0 md:pr-10"></div>
+          </div>
+          <!-- Step 3 -->
+          <div class="flex flex-col md:flex-row items-center justify-between w-full" data-aos="fade-up">
+            <div class="md:w-5/12 text-left md:text-right pr-0 md:pr-10 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-white mb-2">Create</h3>
+              <p class="text-gray-400 font-light">Develop campaigns, content, and creative assets.</p>
+            </div>
+            <div
+              class="absolute left-0 md:left-1/2 flex items-center justify-center w-12 h-12 rounded-full border border-fuchsia-500 bg-black -translate-x-1/2 shadow-lg shadow-fuchsia-500/20 z-10">
+              <span class="text-white font-bold">3</span>
+            </div>
+            <div class="md:w-5/12 pl-0 md:pl-10"></div>
+          </div>
+          <!-- Step 4 -->
+          <div class="flex flex-col md:flex-row-reverse items-center justify-between w-full" data-aos="fade-up">
+            <div class="md:w-5/12 text-left pl-0 md:pl-10 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-white mb-2">Launch</h3>
+              <p class="text-gray-400 font-light">Put your strategy into action across the right channels.</p>
+            </div>
+            <div
+              class="absolute left-0 md:left-1/2 flex items-center justify-center w-12 h-12 rounded-full border border-fuchsia-500 bg-black -translate-x-1/2 shadow-lg shadow-fuchsia-500/20 z-10">
+              <span class="text-white font-bold">4</span>
+            </div>
+            <div class="md:w-5/12 pr-0 md:pr-10"></div>
+          </div>
+          <!-- Step 5 -->
+          <div class="flex flex-col md:flex-row items-center justify-between w-full" data-aos="fade-up">
+            <div class="md:w-5/12 text-left md:text-right pr-0 md:pr-10 mb-4 md:mb-0">
+              <h3 class="text-2xl font-bold text-white mb-2">Optimize</h3>
+              <p class="text-gray-400 font-light">Track performance and continuously improve results.</p>
+            </div>
+            <div
+              class="absolute left-0 md:left-1/2 flex items-center justify-center w-12 h-12 rounded-full border border-indigo-500 bg-black -translate-x-1/2 shadow-lg shadow-indigo-500/20 z-10">
+              <span class="text-white font-bold">5</span>
+            </div>
+            <div class="md:w-5/12 pl-0 md:pl-10"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1 of 3: Investment Tiers -->
+  <section class="relative z-10 py-32 px-6 border-t border-white/5 bg-black/40 backdrop-blur-sm">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center mb-20" data-aos="fade-up">
+        <h3 class="text-xs uppercase tracking-widest text-fuchsia-500 font-bold mb-3">Investment</h3>
+        <h2 class="text-5xl font-semibold text-white tracking-tight">Structured for Scaling.</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Tier 1 -->
+        <div
+          class="p-10 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:border-purple-500/30"
+          data-aos="fade-up" data-aos-delay="100">
+          <h4 class="text-xl font-bold text-white mb-2">Growth Catalyst</h4>
+          <div
+            class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 mb-6">
+            $3k<span class="text-sm font-medium text-gray-500">/mo</span></div>
+          <p class="text-gray-400 font-light text-sm mb-8 leading-relaxed">Perfect for startups ready to establish their
+            digital footprint and build initial predictable lead flow.</p>
+          <ul class="text-left space-y-4 mb-10 w-full text-sm font-light text-gray-300">
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Brand Strategy Foundation</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Search Engine Optimization</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Social Media Management</li>
+          </ul>
+          <button
+            class="mt-auto w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-all">Select
+            Plan</button>
+        </div>
+
+        <!-- Tier 2 -->
+        <div
+          class="p-10 rounded-[2rem] bg-white/10 border-2 border-purple-500 flex flex-col items-center text-center transition-all hover:-translate-y-2 shadow-[0_0_30px_rgba(168,85,247,0.15)] relative"
+          data-aos="fade-up" data-aos-delay="200">
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-purple-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+            Most Popular</div>
+          <h4 class="text-xl font-bold text-white mb-2">Market Leader</h4>
+          <div
+            class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500 mb-6">
+            $8k<span class="text-sm font-medium text-gray-400">/mo</span></div>
+          <p class="text-gray-400 font-light text-sm mb-8 leading-relaxed">Comprehensive omni-channel domination for
+            established brands looking to aggressively scale.</p>
+          <ul class="text-left space-y-4 mb-10 w-full text-sm font-light text-gray-300">
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Everything in Catalyst</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Performance Paid Ads (Meta/Google)</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Advanced Conversion Rate Optimization</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Dedicated Growth Consultant</li>
+          </ul>
+          <button
+            class="mt-auto w-full py-3 rounded-xl bg-purple-500 hover:bg-purple-600 text-white font-semibold transition-all">Select
+            Plan</button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div
+          class="p-10 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:border-purple-500/30"
+          data-aos="fade-up" data-aos-delay="300">
+          <h4 class="text-xl font-bold text-white mb-2">Enterprise Plus</h4>
+          <div class="text-4xl font-black text-white mb-6">Custom</div>
+          <p class="text-gray-400 font-light text-sm mb-8 leading-relaxed">Bespoke marketing architecture for
+            large-scale operations requiring complex integrations.</p>
+          <ul class="text-left space-y-4 mb-10 w-full text-sm font-light text-gray-300">
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              White-glove Strategy Dev</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Unlimited Ad Assets</li>
+            <li class="flex items-center gap-3"><i data-feather="check" class="w-4 h-4 text-purple-400 shrink-0"></i>
+              Custom Software Integrations</li>
+          </ul>
+          <button
+            class="mt-auto w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-all">Contact
+            Us</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 of 3: Technologies -->
+  <section class="relative z-10 py-24 px-6 border-t border-white/5 bg-black">
+    <div class="container mx-auto max-w-7xl">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="w-full md:w-1/3" data-aos="fade-right">
+          <h3 class="text-xs uppercase tracking-widest text-indigo-500 font-bold mb-3">Our Stack</h3>
+          <h2 class="text-4xl font-semibold text-white tracking-tight mb-4">Powered by Enterprise Tech.</h2>
+          <p class="text-gray-400 font-light">We leverage the most advanced analytics, CRM, and distribution platforms
+            on the planet to execute our strategies flawlessly.</p>
+        </div>
+        <div class="w-full md:w-2/3 flex flex-wrap gap-4 justify-start md:justify-end" data-aos="fade-left">
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Google
+            Analytics 4</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Meta
+            Business</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">HubSpot</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Salesforce</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">SEMrush</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Klaviyo</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Looker
+            Studio</span>
+          <span
+            class="px-6 py-3 rounded-lg border border-white/10 bg-white/5 text-gray-300 font-semibold tracking-wide hover:-translate-y-1 transition-transform">Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 of 3: Client Success -->
+  <section class="relative z-10 py-32 px-6 border-t border-white/5 bg-gradient-to-b from-black to-purple-900/10">
+    <div class="container mx-auto max-w-7xl">
+      <div class="text-center mb-20" data-aos="fade-up">
+        <h3 class="text-xs uppercase tracking-widest text-emerald-500 font-bold mb-3">Service Impact</h3>
+        <h2 class="text-5xl font-semibold text-white tracking-tight">Don't Take Our Word For It.</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div
+          class="glass-card p-10 rounded-[2rem] relative hover:-translate-y-2 transition-transform duration-500 hover:shadow-2xl hover:shadow-purple-500/10"
+          data-aos="fade-up" data-aos-delay="100">
+          <i data-feather="message-circle" class="w-10 h-10 text-white/10 absolute top-10 right-10"></i>
+          <div class="flex items-center gap-4 mb-6">
+            <img src="images/img_2.webp"
+              class="w-12 h-12 rounded-full border border-white/10" alt="Client">
+            <div>
+              <h4 class="text-white font-bold">Jason Hughes</h4>
+              <p class="text-xs text-gray-400 uppercase tracking-widest">Director of Marketing</p>
+            </div>
+          </div>
+          <p class="text-gray-300 font-light text-lg leading-relaxed mb-6">"Within moving our digital marketing over to
+            Stackly, our cost per acquisition dropped by 45% while lead flow tripled. Their data-centric approach to
+            Facebook and Google Ads completely transformed our trajectory."</p>
+          <div class="flex gap-2">
+            <span
+              class="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-bold rounded-md border border-purple-500/30">Paid
+              Media</span>
+            <span
+              class="px-3 py-1 bg-fuchsia-500/20 text-fuchsia-300 text-xs font-bold rounded-md border border-fuchsia-500/30">CRO</span>
+          </div>
+        </div>
+
+        <div
+          class="glass-card p-10 rounded-[2rem] relative hover:-translate-y-2 transition-transform duration-500 hover:shadow-2xl hover:shadow-emerald-500/10"
+          data-aos="fade-up" data-aos-delay="200">
+          <i data-feather="message-circle" class="w-10 h-10 text-white/10 absolute top-10 right-10"></i>
+          <div class="flex items-center gap-4 mb-6">
+            <img src="images/img_13.webp"
+              class="w-12 h-12 rounded-full border border-white/10" alt="Client">
+            <div>
+              <h4 class="text-white font-bold">Sarah Jenkins</h4>
+              <p class="text-xs text-gray-400 uppercase tracking-widest">Founder, Lumin</p>
+            </div>
+          </div>
+          <p class="text-gray-300 font-light text-lg leading-relaxed mb-6">"Their branding execution and SEO strategy
+            positioned us as a premium leader in a saturated market. Over 6 months, organic traffic soared by 280%.
+            Choosing Stackly was the smartest investment we've ever made."</p>
+          <div class="flex gap-2">
+            <span
+              class="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-bold rounded-md border border-emerald-500/30">SEO</span>
+            <span
+              class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-bold rounded-md border border-blue-500/30">Brand
+              Strategy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="relative z-10 py-32 px-6 border-t border-white/5 bg-gradient-to-b from-black to-purple-900/20 text-center border-b-[8px] border-purple-500">
+    <div class="container mx-auto max-w-4xl" data-aos="zoom-in">
+      <h2 class="text-5xl md:text-7xl font-semibold text-white tracking-tight mb-8">Ready to Take Your Marketing to the
+        Next Level?</h2>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+        <a href="contact.html"
+          class="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-4 text-sm uppercase tracking-widest font-bold rounded-xl hover:bg-gray-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:-translate-y-1">
+          Build Your Strategy
+          <i data-feather="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+
+  </section>
+  
+  <!-- Premium Footer -->
+  <footer class="relative z-10 border-t border-white/10 bg-black pt-20 pb-10 overflow-hidden w-full text-left">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-purple-900/20 blur-[120px] pointer-events-none"></div>
+    
+    <div class="container mx-auto px-6 relative z-10 gap-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mb-16">
+      <div class="xl:col-span-2 flex flex-col items-start space-y-6">
+        <a href="index.html" class="flex items-center gap-2 group hover:opacity-80 transition-opacity">
+          <img src="logo_0198.webp" alt="Stackly Brand Logo" class="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+        </a>
+        <p class="text-gray-400 font-light text-sm max-w-sm leading-relaxed text-left">
+           We engineer high-growth marketing ecosystems. Reject blanket strategies. Embrace targeted, algorithmic scaling.
+        </p>
+        <div class="flex items-center gap-4 pt-2">
+          <a href="404.html" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/50 hover:bg-purple-500/10 transition-all group">
+            <i data-feather="twitter" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+          </a>
+          <a href="404.html" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/50 hover:bg-purple-500/10 transition-all group">
+            <i data-feather="linkedin" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+          </a>
+          <a href="404.html" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-purple-400 hover:border-purple-500/50 hover:bg-purple-500/10 transition-all group">
+            <i data-feather="instagram" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-left">
+        <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-6 relative inline-block">
+          Navigation
+          <span class="absolute -bottom-2 left-0 w-4 h-0.5 bg-fuchsia-500 rounded-full"></span>
+        </h4>
+        <ul class="space-y-4">
+          <li><a href="index.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Home</a></li>
+          <li><a href="about.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">About</a></li>
+          <li><a href="service.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Services</a></li>
+          <li><a href="blog.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Blog</a></li>
+          <li><a href="contact.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="text-left">
+        <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-6 relative inline-block">
+          Legal
+          <span class="absolute -bottom-2 left-0 w-4 h-0.5 bg-fuchsia-500 rounded-full"></span>
+        </h4>
+        <ul class="space-y-4">
+          <li><a href="404.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Terms of Service</a></li>
+          <li><a href="404.html" class="text-sm text-gray-500 hover:text-purple-400 hover:pl-2 transition-all block">Privacy Policy</a></li>
+          <li><a href="login.html" class="text-sm text-purple-400 font-bold hover:text-purple-300 hover:pl-2 transition-all flex items-center">Portal <span class="text-[9px] font-black uppercase ml-2 bg-purple-500/20 py-0.5 px-2 rounded-full text-purple-300 border border-purple-500/30">Client</span></a></li>
+        </ul>
+      </div>
+      
+      <div class="text-left xl:pl-4">
+        <h4 class="text-white font-bold uppercase tracking-widest text-xs mb-6 relative inline-block">
+          HQ Details
+          <span class="absolute -bottom-2 left-0 w-4 h-0.5 bg-fuchsia-500 rounded-full"></span>
+        </h4>
+        <ul class="space-y-4 text-left">
+          <li class="flex items-start gap-3">
+             <i data-feather="map-pin" class="w-4 h-4 text-purple-400 shrink-0 mt-1"></i>
+             <span class="text-sm text-gray-500 text-left">MMR Complex, Chinna Thirupathi, Salem, TN 636008</span>
+          </li>
+          <li class="flex items-center gap-3">
+             <i data-feather="mail" class="w-4 h-4 text-purple-400 shrink-0"></i>
+             <a href="mailto:info@stackly.com" class="text-sm text-gray-500 hover:text-purple-400 transition-colors">info@stackly.com</a>
+          </li>
+          <li class="flex items-center gap-3">
+             <i data-feather="phone" class="w-4 h-4 text-purple-400 shrink-0"></i>
+             <a href="tel:9876543210" class="text-sm text-gray-500 hover:text-purple-400 transition-colors">9876543210</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="container mx-auto px-6 relative z-10 border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+       <p class="text-gray-600 text-[11px] tracking-widest uppercase font-bold text-left w-full md:w-auto">© 2026 Stackly Marketing. All rights reserved.</p>
+       <div class="flex items-center gap-2">
+         <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+         <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">All Systems Operational</span>
+       </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    feather.replace();
+    // Global link redirect per user rule: All content links must go to 404
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('a').forEach(link => {
+            if (!link.closest('nav') && !link.closest('footer')) {
+                link.href = '404.html';
+            }
+        });
+    });
+    AOS.init({ once: true, offset: 100, duration: 800, easing: 'ease-out-cubic' });
+  </script>
+  <!-- Lenis Smooth Scrolling -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.35/dist/lenis.min.js"></script>
+  <script>
+    const lenis = new Lenis()
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+  </script>
+</body>
+
+</html>

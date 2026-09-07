@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Stackly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #030303; color: #fff; margin: 0; overflow: hidden; }
+    
+    .glass-panel { 
+      background: rgba(20, 20, 20, 0.4); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255,255,255,0.05); 
+    }
+    
+    .sidebar-link {
+       transition: all 0.3s ease;
+    }
+    .sidebar-link.active {
+       background: rgba(168, 85, 247, 0.15);
+       color: #e879f9;
+       border-right: 3px solid #d946ef;
+    }
+    .sidebar-link:hover:not(.active) {
+       background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeInUp 0.4s ease-out forwards; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+  </style>
+</head>
+<body class="flex h-screen antialiased selection:bg-purple-500/30">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 glass-panel border-r border-white/5 flex flex-col z-50 shrink-0 h-full fixed md:static inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+    <!-- Logo -->
+    <div class="h-20 flex items-center justify-between px-8 border-b border-white/5">
+      <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <img src="logo_0198.webp" alt="Stackly Brand Logo" class="h-8 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+      </a>
+      <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white transition-colors">
+        <i data-feather="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    
+    <!-- Menu Options -->
+    <nav class="flex-1 py-8 overflow-y-auto">
+      <p class="px-8 text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4">Main Menu</p>
+      
+      <button onclick="switchTab('overview')" class="sidebar-link active w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-overview">
+        <i data-feather="grid" class="w-4 h-4"></i> Overview
+      </button>
+      <button onclick="switchTab('campaigns')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-campaigns">
+        <i data-feather="zap" class="w-4 h-4"></i> Campaigns
+      </button>
+      <button onclick="switchTab('analytics')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-analytics">
+        <i data-feather="pie-chart" class="w-4 h-4"></i> Analytics
+      </button>
+      <button onclick="switchTab('clients')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-clients">
+        <i data-feather="users" class="w-4 h-4"></i> Clients
+      </button>
+      <button onclick="switchTab('settings')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-settings">
+        <i data-feather="settings" class="w-4 h-4"></i> Settings
+      </button>
+      <a href="login.html" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 hover:text-white transition-colors cursor-pointer">
+        <i data-feather="log-out" class="w-4 h-4"></i> Logout
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-black to-black relative">
+    
+    <!-- Top Navbar -->
+    <header class="h-20 glass-panel border-b border-white/5 flex items-center justify-between px-6 md:px-10 z-10">
+      <div class="flex items-center gap-4 w-96 relative">
+        <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white transition-colors shrink-0">
+          <i data-feather="menu" class="w-6 h-6"></i>
+        </button>
+        <div class="relative w-full">
+          <i data-feather="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+          <input type="text" placeholder="Search campaigns, clients..." class="w-full bg-white/5 border border-white/5 rounded-full pl-11 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-fuchsia-500 transition-colors placeholder:text-gray-600">
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <button onclick="window.location.href='404.html'" class="relative text-gray-400 hover:text-white transition-colors">
+          <i data-feather="bell" class="w-5 h-5"></i>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-fuchsia-500 rounded-full animate-pulse"></span>
+        </button>
+        <div class="flex items-center gap-3 border-l border-white/10 pl-6">
+          <img src="images/img_2.webp" class="w-9 h-9 rounded-full border border-fuchsia-500" alt="Admin Default">
+          <div class="hidden md:block">
+            <p class="text-xs font-bold uppercase tracking-widest text-white">System Admin</p>
+            <p class="text-[10px] text-fuchsia-400">Master Control</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Area (Scrollable) -->
+    <main class="flex-1 overflow-y-auto p-10 relative z-0">
+      
+      <!-- BACKGROUND AMBIENT GLOW -->
+      <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      
+      <!-- TAB 1: OVERVIEW -->
+      <section id="overview" class="tab-content active space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Agency Overview</h2>
+          <p class="text-gray-400 text-sm">Real-time metrics and system health.</p>
+        </div>
+        
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 mb-4"><i data-feather="dollar-sign" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Monthly MRR</p>
+            <h3 class="text-2xl font-bold text-white">$142,500</h3>
+            <p class="text-xs text-green-400 mt-2 font-semibold">↑ 12.5% from last month</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4"><i data-feather="users" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Active Clients</p>
+            <h3 class="text-2xl font-bold text-white">48</h3>
+            <p class="text-xs text-cyan-400 mt-2 font-semibold">↑ 4 new this week</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 mb-4"><i data-feather="zap" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Active Campaigns</p>
+            <h3 class="text-2xl font-bold text-white">156</h3>
+            <p class="text-xs text-gray-500 mt-2">Running identically</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 mb-4"><i data-feather="bar-chart-2" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Avg. ROAS</p>
+            <h3 class="text-2xl font-bold text-white">4.2x</h3>
+            <p class="text-xs text-orange-400 mt-2 font-semibold">Across all channels</p>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="glass-panel rounded-2xl p-8">
+           <h3 class="text-lg font-bold text-white mb-6">Recent System Activity</h3>
+           <div class="space-y-4">
+              <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center"><i data-feather="check" class="w-4 h-4 text-emerald-400"></i></div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-white">Campaign "Winter Scale" Launched</h4>
+                    <p class="text-xs text-gray-500">Client: Vertex Technologies</p>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-600 font-mono">10 mins ago</span>
+              </div>
+              <div class="flex items-center justify-between pb-4 border-b border-white/5">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center"><i data-feather="file-text" class="w-4 h-4 text-blue-400"></i></div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-white">Invoice #INV-2900 Paid</h4>
+                    <p class="text-xs text-gray-500">Client: Aura Beauty</p>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-600 font-mono">1 hour ago</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-8 h-8 rounded-full bg-fuchsia-500/20 flex items-center justify-center"><i data-feather="alert-circle" class="w-4 h-4 text-fuchsia-400"></i></div>
+                  <div>
+                    <h4 class="text-sm font-semibold text-white">Ad Spend Alert Triggered</h4>
+                    <p class="text-xs text-gray-500">Client: TechEdge reached 95% of monthly budget.</p>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-600 font-mono">3 hours ago</span>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CAMPAIGNS -->
+      <section id="campaigns" class="tab-content space-y-8">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Agency Campaigns</h2>
+            <p class="text-gray-400 text-sm">Manage and review all active client operations.</p>
+          </div>
+          <button onclick="window.location.href='404.html'" class="bg-white text-black px-4 py-2 font-semibold text-sm rounded-lg hover:bg-gray-200 transition">Create Master Campaign</button>
+        </div>
+        
+        <div class="glass-panel rounded-2xl overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest font-semibold border-b border-white/5">
+                <th class="px-6 py-4">Campaign Name</th>
+                <th class="px-6 py-4">Client</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4">Spend</th>
+                <th class="px-6 py-4 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm divide-y divide-white/5">
+              <tr class="hover:bg-white/5 transition">
+                <td class="px-6 py-4 font-semibold text-white">Q4 Search Intent</td>
+                <td class="px-6 py-4 text-gray-400">Alpha Core</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Active</span></td>
+                <td class="px-6 py-4 text-white font-mono">$12,450</td>
+                <td class="px-6 py-4 text-right"><button onclick="window.location.href='404.html'" class="text-fuchsia-400 hover:text-fuchsia-300 font-semibold">Manage</button></td>
+              </tr>
+              <tr class="hover:bg-white/5 transition">
+                <td class="px-6 py-4 font-semibold text-white">Holiday Retargeting</td>
+                <td class="px-6 py-4 text-gray-400">Aura Beauty</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">Paused</span></td>
+                <td class="px-6 py-4 text-white font-mono">$5,200</td>
+                <td class="px-6 py-4 text-right"><button onclick="window.location.href='404.html'" class="text-fuchsia-400 hover:text-fuchsia-300 font-semibold">Manage</button></td>
+              </tr>
+              <tr class="hover:bg-white/5 transition">
+                <td class="px-6 py-4 font-semibold text-white">B2B Lead Sprint</td>
+                <td class="px-6 py-4 text-gray-400">TechEdge</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Active</span></td>
+                <td class="px-6 py-4 text-white font-mono">$28,900</td>
+                <td class="px-6 py-4 text-right"><button onclick="window.location.href='404.html'" class="text-fuchsia-400 hover:text-fuchsia-300 font-semibold">Manage</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 3: ANALYTICS -->
+      <section id="analytics" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Global Analytics</h2>
+          <p class="text-gray-400 text-sm">Deep dive into data across the entire agency fleet.</p>
+        </div>
+        <div class="glass-panel p-10 rounded-2xl flex flex-col items-center justify-center text-center opacity-60">
+          <i data-feather="bar-chart" class="w-16 h-16 text-gray-600 mb-4"></i>
+          <p class="text-gray-400">Advanced Analytics Module connecting to Looker Studio...</p>
+          <div class="mt-4 w-6 h-6 border-2 border-fuchsia-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </section>
+
+      <!-- TAB 4: CLIENTS -->
+      <section id="clients" class="tab-content space-y-8">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Client Roster</h2>
+            <p class="text-gray-400 text-sm">Manage agency clients and their portal access.</p>
+          </div>
+          <button onclick="window.location.href='404.html'" class="bg-white text-black px-4 py-2 font-semibold text-sm rounded-lg hover:bg-gray-200 transition">Invite Client</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel p-6 rounded-2xl hover:border-fuchsia-500/40 transition">
+             <div class="flex items-center gap-4 mb-4">
+               <div class="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center text-lg font-bold">TC</div>
+               <div>
+                 <h4 class="text-white font-bold">TechEdge Corp</h4>
+                 <p class="text-xs text-gray-400">Enterprise Plus Plan</p>
+               </div>
+             </div>
+             <p class="text-sm text-gray-500 font-light. mb-4">Software and SaaS automation.</p>
+             <button onclick="window.location.href='404.html'" class="w-full py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:bg-white/5">View Profile</button>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl hover:border-fuchsia-500/40 transition">
+             <div class="flex items-center gap-4 mb-4">
+               <div class="w-12 h-12 rounded-full bg-rose-900/50 flex items-center justify-center text-lg font-bold">AB</div>
+               <div>
+                 <h4 class="text-white font-bold">Aura Beauty</h4>
+                 <p class="text-xs text-gray-400">Market Leader Plan</p>
+               </div>
+             </div>
+             <p class="text-sm text-gray-500 font-light. mb-4">DTC Cosmetic and Skincare brand.</p>
+             <button onclick="window.location.href='404.html'" class="w-full py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:bg-white/5">View Profile</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: SETTINGS -->
+      <section id="settings" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Admin Settings</h2>
+          <p class="text-gray-400 text-sm">Configure agency platform preferences.</p>
+        </div>
+        
+        <div class="glass-panel max-w-2xl p-8 rounded-2xl space-y-6">
+           <div>
+             <label class="block text-xs uppercase text-gray-500 font-bold mb-2">Agency Name</label>
+             <input type="text" value="Stackly Marketing Agency" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-fuchsia-500">
+           </div>
+           <div>
+             <label class="block text-xs uppercase text-gray-500 font-bold mb-2">Support Email</label>
+             <input type="email" value="support@stacklyagency.com" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-fuchsia-500">
+           </div>
+           <div class="pt-4">
+             <button onclick="window.location.href='404.html'" class="bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-semibold py-3 px-6 rounded-lg transition shadow-lg shadow-fuchsia-500/20">Save Configuration</button>
+           </div>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+
+  <script>
+    feather.replace();
+    
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.body.classList.toggle('overflow-hidden');
+      document.querySelector('main').classList.toggle('overflow-hidden');
+    }
+    
+    // Tab switching logic
+    function switchTab(tabId) {
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      
+      // Remove active class from buttons
+      document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+      
+      // Show selected content
+      document.getElementById(tabId).classList.add('active');
+      
+      // Highlight selected button
+      document.getElementById('btn-' + tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

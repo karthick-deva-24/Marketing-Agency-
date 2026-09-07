@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Stackly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: '#000000',
+              primary: '#a855f7',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+      body { font-family: 'Inter', sans-serif; background-color: #000; color: #fff; overflow: hidden; margin: 0; }
+      
+      .glitch-text {
+        font-size: clamp(8rem, 20vw, 16rem);
+        font-weight: 900;
+        line-height: 1;
+        position: relative;
+        color: #fff;
+        text-shadow: 0 0 50px rgba(168, 85, 247, 0.4);
+        z-index: 10;
+        letter-spacing: -5px;
+      }
+
+      .glitch-text::before, .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+      }
+      
+      .glitch-text::before {
+        left: -3px;
+        text-shadow: 2px 0 #00ffff;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch-anim 5s infinite linear alternate-reverse;
+      }
+      
+      .glitch-text::after {
+        left: 3px;
+        text-shadow: -2px 0 #d946ef;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch-anim2 3s infinite linear alternate-reverse;
+      }
+      
+      @keyframes glitch-anim {
+        0% { clip: rect(10px, 9999px, 86px, 0); }
+        5% { clip: rect(61px, 9999px, 14px, 0); }
+        10% { clip: rect(54px, 9999px, 3px, 0); }
+        15% { clip: rect(98px, 9999px, 32px, 0); opacity: 0.8; }
+        20% { clip: rect(12px, 9999px, 62px, 0); }
+        25% { clip: rect(40px, 9999px, 40px, 0); }
+        30% { clip: rect(78px, 9999px, 98px, 0); }
+        100% { clip: rect(10px, 9999px, 86px, 0); opacity: 1; }
+      }
+      @keyframes glitch-anim2 {
+        0% { clip: rect(65px, 9999px, 93px, 0); }
+        5% { clip: rect(14px, 9999px, 42px, 0); }
+        10% { clip: rect(89px, 9999px, 75px, 0); }
+        15% { clip: rect(2px, 9999px, 80px, 0); opacity: 0.7; }
+        20% { clip: rect(32px, 9999px, 12px, 0); }
+        25% { clip: rect(75px, 9999px, 60px, 0); }
+        30% { clip: rect(43px, 9999px, 90px, 0); }
+        100% { clip: rect(10px, 9999px, 86px, 0); opacity: 0; }
+      }
+
+      /* Ambient Orbs */
+      .bg-shape {
+        position: absolute;
+        filter: blur(140px);
+        border-radius: 50%;
+        z-index: 1;
+        animation: pulse 12s infinite alternate ease-in-out;
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+        100% { transform: scale(1.3) translate(50px, -50px); opacity: 0.7; }
+      }
+
+      /* Floating Glass Shards */
+      .shard {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.01);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow: inset 0 0 20px rgba(255,255,255,0.02);
+        z-index: 5;
+        animation: float var(--dur, 15s) infinite linear;
+      }
+
+      @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(-200px) rotate(360deg) scale(1.2); opacity: 0; }
+      }
+      
+      .radial-bg {
+         background: radial-gradient(circle at center, rgba(168,85,247,0.1) 0%, transparent 70%);
+      }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex items-center justify-center relative selection:bg-purple-500/30">
+
+  <!-- Ambient Background -->
+  <div class="radial-bg absolute inset-0 z-0 pointer-events-none"></div>
+  <div class="bg-shape bg-purple-700/30 w-[60vw] h-[60vw] top-[-20%] right-[-10%] pointer-events-none"></div>
+  <div class="bg-shape bg-fuchsia-600/30 w-[50vw] h-[50vw] bottom-[-20%] left-[-10%] pointer-events-none" style="animation-delay: -5s"></div>
+
+  <!-- Floating Glass Shards (Dynamically Generated in Native CSS via inline variables) -->
+  <div class="shard rounded-3xl pointer-events-none" style="width: 150px; height: 150px; left: 10%; --dur: 25s; animation-delay: -5s;"></div>
+  <div class="shard rounded-lg pointer-events-none" style="width: 80px; height: 120px; left: 25%; --dur: 18s; animation-delay: -2s;"></div>
+  <div class="shard rounded-full pointer-events-none" style="width: 200px; height: 200px; right: 15%; --dur: 30s; animation-delay: -10s;"></div>
+  <div class="shard pointer-events-none" style="width: 100px; height: 140px; right: 30%; border-radius: 40px 10px 40px 10px; --dur: 22s; animation-delay: -7s;"></div>
+  <div class="shard pointer-events-none" style="width: 60px; height: 60px; left: 50%; --dur: 15s; border-radius: 20px;"></div>
+
+  <!-- Content -->
+  <div class="relative z-20 text-center flex flex-col items-center px-6">
+    <div class="inline-block border border-purple-500/40 rounded-full px-5 py-2 text-xs tracking-widest font-bold text-purple-300 mb-6 bg-purple-500/20 backdrop-blur-md uppercase flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+      <i data-feather="alert-triangle" class="w-4 h-4"></i> Coordinate Error
+    </div>
+    
+    <!-- Glitched 404 -->
+    <h1 class="glitch-text tracking-tighter" data-text="404">404</h1>
+    
+    <div class="mt-8 max-w-md mx-auto">
+      <h2 class="text-3xl font-bold text-white mb-4">Lost in the void.</h2>
+      <p class="text-gray-400 mb-10 text-sm leading-relaxed">The page you're looking for has drifted off our marketing radar. It may have been moved, renamed, or abducted by aliens.</p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button onclick="smartGoBack()" class="w-full sm:w-auto px-8 py-4 bg-black/40 border border-white/20 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-white/10 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 backdrop-blur-sm">
+          <i data-feather="arrow-left" class="w-4 h-4"></i> Go Back
+        </button>
+        <a href="index.html" target="_self" class="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-gray-200 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+          <i data-feather="home" class="w-4 h-4"></i> Return Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    feather.replace();
+    
+    // Smart Go Back logic ensures that if the 404 was opened in a new tab with no history, 
+    // it smoothly redirects to the home page instead of doing nothing.
+    function smartGoBack() {
+       if (window.history.length > 2) {
+          window.history.back();
+       } else {
+          window.location.href = 'index.html';
+       }
+    }
+
+    // Parallax mouse effect on shards
+    document.addEventListener('mousemove', (e) => {
+       const x = (e.clientX - window.innerWidth / 2) / 40;
+       const y = (e.clientY - window.innerHeight / 2) / 40;
+       
+       document.querySelectorAll('.shard').forEach((shard, index) => {
+          const depth = (index + 1) * 0.5;
+          shard.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
+       });
+    });
+  </script>
+</body>
+</html>

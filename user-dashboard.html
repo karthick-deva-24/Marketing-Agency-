@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal - Stackly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #000000; color: #fff; margin: 0; overflow: hidden; }
+    
+    .glass-panel { 
+      background: rgba(20, 20, 20, 0.4); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255,255,255,0.05); 
+    }
+    
+    .sidebar-link {
+       transition: all 0.3s ease;
+    }
+    .sidebar-link.active {
+       background: rgba(168, 85, 247, 0.15);
+       color: #c084fc;
+       border-right: 3px solid #a855f7;
+    }
+    .sidebar-link:hover:not(.active) {
+       background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeInUp 0.4s ease-out forwards; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+  </style>
+</head>
+<body class="flex h-screen antialiased selection:bg-purple-500/30">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 glass-panel border-r border-white/5 flex flex-col z-50 shrink-0 h-full fixed md:static inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+    <!-- Logo -->
+    <div class="h-20 flex items-center justify-between px-8 border-b border-white/5">
+      <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <img src="logo_0198.webp" alt="Stackly Brand Logo" class="h-8 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+      </a>
+      <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white transition-colors">
+        <i data-feather="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    
+    <!-- Menu Options (5 Minimum) -->
+    <nav class="flex-1 py-8 overflow-y-auto">
+      <p class="px-8 text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-4">Workspace</p>
+      
+      <button onclick="switchTab('overview')" class="sidebar-link active w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-overview">
+        <i data-feather="home" class="w-4 h-4"></i> Overview
+      </button>
+      <button onclick="switchTab('campaigns')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-campaigns">
+        <i data-feather="target" class="w-4 h-4"></i> My Campaigns
+      </button>
+      <button onclick="switchTab('reports')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-reports">
+        <i data-feather="bar-chart-2" class="w-4 h-4"></i> Reports
+      </button>
+      <button onclick="switchTab('invoices')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-invoices">
+        <i data-feather="file-text" class="w-4 h-4"></i> Invoices
+      </button>
+      <button onclick="switchTab('profile')" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 cursor-pointer" id="btn-profile">
+        <i data-feather="user" class="w-4 h-4"></i> Profile
+      </button>
+      <a href="login.html" class="sidebar-link w-full flex items-center gap-4 px-8 py-4 text-sm font-medium text-gray-400 hover:text-white transition-colors cursor-pointer">
+        <i data-feather="log-out" class="w-4 h-4"></i> Logout
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col h-full bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-purple-900/10 via-black to-black relative">
+    
+    <!-- Top Navbar -->
+    <header class="h-20 glass-panel border-b border-white/5 flex items-center justify-between px-6 md:px-10 z-10">
+      <div class="flex items-center gap-4">
+        <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white transition-colors">
+          <i data-feather="menu" class="w-6 h-6"></i>
+        </button>
+        <!-- Breadcrumbs or simple welcome message instead of search -->
+        <h2 class="text-gray-300 font-medium hidden sm:block">Welcome back, <span class="text-white font-bold">Jason Hughes</span></h2>
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <button onclick="window.location.href='404.html'" class="relative text-gray-400 hover:text-white transition-colors">
+          <i data-feather="bell" class="w-5 h-5"></i>
+        </button>
+        <button onclick="window.location.href='404.html'" class="relative text-gray-400 hover:text-white transition-colors">
+          <i data-feather="help-circle" class="w-5 h-5"></i>
+        </button>
+        <div class="flex items-center gap-3 border-l border-white/10 pl-6">
+          <img src="images/img_2.webp" class="w-9 h-9 rounded-full border border-purple-500" alt="Client User">
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Area (Scrollable) -->
+    <main class="flex-1 overflow-y-auto p-10 relative z-0">
+      
+      <!-- BACKGROUND AMBIENT GLOW -->
+      <div class="absolute top-0 right-1/4 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      
+      <!-- TAB 1: OVERVIEW -->
+      <section id="overview" class="tab-content active space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Performance Summary</h2>
+          <p class="text-gray-400 text-sm">Your marketing overview for the last 30 days.</p>
+        </div>
+        
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 mb-4"><i data-feather="mouse-pointer" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Total Clicks</p>
+            <h3 class="text-2xl font-bold text-white">45,210</h3>
+            <p class="text-xs text-green-400 mt-2 font-semibold">↑ 18% vs last month</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4"><i data-feather="users" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">New Leads</p>
+            <h3 class="text-2xl font-bold text-white">1,402</h3>
+            <p class="text-xs text-green-400 mt-2 font-semibold">↑ 5% vs last month</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400 mb-4"><i data-feather="trending-up" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Conversion Rate</p>
+            <h3 class="text-2xl font-bold text-white">3.1%</h3>
+            <p class="text-xs text-green-400 mt-2 font-semibold">↑ 0.5% vs last month</p>
+          </div>
+          <div class="glass-panel p-6 rounded-2xl relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4"><i data-feather="dollar-sign" class="w-5 h-5"></i></div>
+            <p class="text-sm text-gray-400 font-medium mb-1">Total Spend</p>
+            <h3 class="text-2xl font-bold text-white">$12,450.00</h3>
+            <p class="text-xs text-gray-500 mt-2">On track for budget limit</p>
+          </div>
+        </div>
+
+        <!-- Latest Updates -->
+        <div class="glass-panel rounded-2xl p-8">
+           <h3 class="text-lg font-bold text-white mb-6">Recent Updates from Stackly Account Manager</h3>
+           <div class="space-y-4">
+              <div class="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5">
+                 <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0"><img src="images/img_6.webp" class="w-10 h-10 rounded-full" alt="Account Manager"></div>
+                 <div>
+                    <h4 class="text-sm font-semibold text-white">Weekly Strategy Adjustment</h4>
+                    <p class="text-xs text-gray-400 mt-1 leading-relaxed">Hey Jason! We've noticed great traction on the Holiday creatives. We are shifting 15% of the display budget into Meta Retargeting for the weekend to maximize ROAS.</p>
+                    <p class="text-[10px] text-gray-500 mt-2">Today at 10:30 AM</p>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: MY CAMPAIGNS -->
+      <section id="campaigns" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">My Active Campaigns</h2>
+          <p class="text-gray-400 text-sm">Live views of your ongoing marketing efforts.</p>
+        </div>
+        
+        <div class="glass-panel rounded-2xl overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest font-semibold border-b border-white/5">
+                <th class="px-6 py-4">Campaign Name</th>
+                <th class="px-6 py-4">Platform</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4">ROAS</th>
+                <th class="px-6 py-4 text-right">Spend</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm divide-y divide-white/5">
+              <tr class="hover:bg-white/5 transition border-b border-white/5">
+                <td class="px-6 py-4 font-semibold text-white">Q4 Search Intent</td>
+                <td class="px-6 py-4 text-gray-400">Google Ads</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Active</span></td>
+                <td class="px-6 py-4 text-white font-mono">3.4x</td>
+                <td class="px-6 py-4 text-right text-gray-400 font-mono">$4,200</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition border-b border-white/5">
+                <td class="px-6 py-4 font-semibold text-white">Holiday Retargeting - Video</td>
+                <td class="px-6 py-4 text-gray-400">Meta (IG/FB)</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Active</span></td>
+                <td class="px-6 py-4 text-white font-mono">4.1x</td>
+                <td class="px-6 py-4 text-right text-gray-400 font-mono">$8,250</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 3: REPORTS -->
+      <section id="reports" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Performance Reports</h2>
+          <p class="text-gray-400 text-sm">Download your tailored monthly and weekly insights.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div class="glass-panel p-6 rounded-2xl flex items-center justify-between hover:border-purple-500/40 transition cursor-pointer">
+              <div class="flex items-center gap-4">
+                 <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400"><i data-feather="file-text" class="w-5 h-5"></i></div>
+                 <div>
+                    <h4 class="text-white text-sm font-semibold">October 2026 Recap</h4>
+                    <p class="text-xs text-gray-500">PDF Document</p>
+                 </div>
+              </div>
+              <i data-feather="download" class="w-4 h-4 text-gray-400"></i>
+           </div>
+           <div class="glass-panel p-6 rounded-2xl flex items-center justify-between hover:border-purple-500/40 transition cursor-pointer">
+              <div class="flex items-center gap-4">
+                 <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400"><i data-feather="file-text" class="w-5 h-5"></i></div>
+                 <div>
+                    <h4 class="text-white text-sm font-semibold">September 2026 Recap</h4>
+                    <p class="text-xs text-gray-500">PDF Document</p>
+                 </div>
+              </div>
+              <i data-feather="download" class="w-4 h-4 text-gray-400"></i>
+           </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: INVOICES -->
+      <section id="invoices" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">Billing & Invoices</h2>
+          <p class="text-gray-400 text-sm">Manage payment methods and download receipts.</p>
+        </div>
+        
+        <div class="glass-panel rounded-2xl overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest font-semibold border-b border-white/5">
+                <th class="px-6 py-4">Date</th>
+                <th class="px-6 py-4">Invoice #</th>
+                <th class="px-6 py-4">Amount</th>
+                <th class="px-6 py-4">Status</th>
+                <th class="px-6 py-4 text-right">Download</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm divide-y divide-white/5">
+              <tr class="hover:bg-white/5 transition">
+                <td class="px-6 py-4 text-gray-400">Nov 1, 2026</td>
+                <td class="px-6 py-4 font-semibold text-white">INV-28492</td>
+                <td class="px-6 py-4 text-white font-mono">$8,000.00</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Paid</span></td>
+                <td class="px-6 py-4 text-right flex justify-end"><i data-feather="download" class="w-4 h-4 text-purple-400 cursor-pointer hover:text-purple-300"></i></td>
+              </tr>
+              <tr class="hover:bg-white/5 transition">
+                <td class="px-6 py-4 text-gray-400">Oct 1, 2026</td>
+                <td class="px-6 py-4 font-semibold text-white">INV-27901</td>
+                <td class="px-6 py-4 text-white font-mono">$8,000.00</td>
+                <td class="px-6 py-4"><span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Paid</span></td>
+                <td class="px-6 py-4 text-right flex justify-end"><i data-feather="download" class="w-4 h-4 text-purple-400 cursor-pointer hover:text-purple-300"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 5: PROFILE -->
+      <section id="profile" class="tab-content space-y-8">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-white mb-2">My Profile</h2>
+          <p class="text-gray-400 text-sm">Manage your personal and company details.</p>
+        </div>
+        
+        <div class="glass-panel max-w-2xl p-8 rounded-2xl space-y-6">
+           <div class="flex items-center gap-6 mb-8 pb-8 border-b border-white/5">
+             <img src="images/img_2.webp" class="w-20 h-20 rounded-full border border-purple-500" alt="Client User">
+             <div>
+               <h3 class="text-xl font-bold text-white">Jason Hughes</h3>
+               <p class="text-gray-400">Director of Marketing, TechEdge</p>
+               <button onclick="window.location.href='404.html'" class="mt-3 text-xs uppercase tracking-widest text-purple-400 font-bold hover:text-purple-300">Change Photo</button>
+             </div>
+           </div>
+           
+           <div class="grid grid-cols-2 gap-6">
+             <div>
+               <label class="block text-xs uppercase text-gray-500 font-bold mb-2">First Name</label>
+               <input type="text" value="Jason" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+             </div>
+             <div>
+               <label class="block text-xs uppercase text-gray-500 font-bold mb-2">Last Name</label>
+               <input type="text" value="Hughes" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+             </div>
+             <div class="col-span-2">
+               <label class="block text-xs uppercase text-gray-500 font-bold mb-2">Email Address</label>
+               <input type="email" value="jhughes@techedge.com" class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500">
+             </div>
+           </div>
+           <div class="pt-4 flex justify-end">
+             <button onclick="window.location.href='404.html'" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition shadow-lg shadow-purple-500/20">Save Changes</button>
+           </div>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+
+  <script>
+    feather.replace();
+    
+    // Sidebar toggle logic
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.body.classList.toggle('overflow-hidden');
+      document.querySelector('main').classList.toggle('overflow-hidden');
+    }
+    
+    // Tab switching logic (Same as Admin)
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      document.getElementById('btn-' + tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>
