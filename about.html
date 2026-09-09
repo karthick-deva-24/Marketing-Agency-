@@ -561,7 +561,7 @@
     // Global link redirect per user rule: All content links must go to 404
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('a').forEach(link => {
-            if (!link.closest('nav') && !link.closest('footer')) {
+            if (!link.closest('nav') && !link.closest('footer') && !link.closest('#mobile-menu')) {
                 link.href = '404.html';
             }
         });
